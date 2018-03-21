@@ -1,5 +1,3 @@
-import fetch from 'unfetch';
-
 export const config = () => ({
 	options: {
 		mode: 'cors',
@@ -8,7 +6,7 @@ export const config = () => ({
 		}
 	},
 	base: process.env.NODE_ENV === 'production'
-		? '//api.ryaposov.com' : '//localhost:8082'
+		? 'https://api.ryaposov.com' : 'https://api.ryaposov.com'
 });
 
 

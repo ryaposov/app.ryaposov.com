@@ -1,4 +1,16 @@
 import React from 'react';
-import Routing from './src/routing'
+import { Provider } from 'react-redux'
+import store from './src/store'
+import Router from './src/routing'
 
-export default Routing;
+class App extends React.Component {
+	render () {
+		return (
+			<Provider store={store}>
+		    <Router />
+		  </Provider>
+		)
+	}
+}
+
+export default App

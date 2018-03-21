@@ -2,19 +2,61 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import NavigationService from './navigationService';
 import {TabNavigator, TabBarBottom} from 'react-navigation';
-import ProjectsStack from './projects'
-import BlogStack from './blog'
+import tabBarStyle from './tabBarStyle';
+import ProjectsStack from './projects';
+import BlogStack from './blog';
+
+const NavigatorDevelopmentComponent = ProjectsStack('Development');
+
+class NavigatorDevelopment extends React.Component {
+  render () {
+    return (
+      <NavigatorDevelopmentComponent
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef, 1);
+        }}
+      />
+    );
+  }
+}
+
+const NavigatorDesignComponent = ProjectsStack('Design');
+
+class NavigatorDesign extends React.Component {
+  render () {
+    return (
+      <NavigatorDesignComponent
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef, 2);
+        }}
+      />
+    );
+  }
+}
+
+class NavigatorBlog extends React.Component {
+  render () {
+    return (
+      <BlogStack
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef, 3);
+        }}
+      />
+    );
+  }
+}
 
 export default TabNavigator({
   Development: {
-    screen: ProjectsStack('Development')
+    screen: NavigatorDevelopment
   },
   Design: {
-    screen: ProjectsStack('Design')
+    screen: NavigatorDesign
   },
   Blog: {
-    screen: BlogStack
+    screen: NavigatorBlog
   }
 }, {
   navigationOptions: ({navigation}) => ({
@@ -49,9 +91,7 @@ export default TabNavigator({
     labelStyle: {
       fontSize: 14
     },
-    style: {
-      backgroundColor: '#fff'
-    }
+    style: tabBarStyle
   },
   tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',

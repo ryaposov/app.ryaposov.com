@@ -1,26 +1,30 @@
 import {StackNavigator} from 'react-navigation';
+import headerStyle from './headerStyles';
 
 import Projects from '../pages/Projects';
-import Project from '../pages/Projects';
+import Project from '../pages/Project';
 
 export default ProjectsStack = (type) => (
 	StackNavigator({
-	  Projects: {
+	  [type + 'Projects']: {
 			screen: Projects,
 			path: `/:type`,
 			navigationOptions: ({ navigation }) => ({
-				title: navigation.state.params.type
+				title: navigation.state.params.type.toUpperCase()
 			}),
 		},
-	  Project: {
+	  [type + 'Project']: {
 			screen: Project,
 			path: `/:type/:id/`,
 			navigationOptions: ({ navigation }) => ({
-				title: 'Project'
+				title: 'Project'.toUpperCase()
 			}),
 		}
 	},
 	{
-		initialRouteParams: { type }
+		initialRouteParams: { type },
+		navigationOptions: {
+      ...headerStyle
+    },
 	})
 )
