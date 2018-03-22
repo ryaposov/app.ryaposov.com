@@ -2,64 +2,59 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import store from '../store';
+import { setActiveTabAction } from '../store/actions/activeTab'
+
 import NavigationService from './navigationService';
 import {TabNavigator, TabBarBottom} from 'react-navigation';
-import tabBarStyle from './tabBarStyle';
+import tabBarStyle from '../styles/tabBarStyle';
 import ProjectsStack from './projects';
 import BlogStack from './blog';
 
-const NavigatorDevelopmentComponent = ProjectsStack('Development');
+function StackComponent (type, id) {
+	let NavigatorComponent = id !== 3 ? ProjectsStack(type) : BlogStack
 
-class NavigatorDevelopment extends React.Component {
-  render () {
-    return (
-      <NavigatorDevelopmentComponent
-        ref={navigatorRef => {
-          NavigationService.setTopLevelNavigator(navigatorRef, 1);
-        }}
-      />
-    );
-  }
-}
+	class Navigator extends React.Component {
+	  render () {
+	    return (
+	      <NavigatorComponent
+	        ref={navigatorRef => {
+	          NavigationService.setTopLevelNavigator(navigatorRef, id);
+	        }}
+	      />
+	    );
+	  }
+	}
 
-const NavigatorDesignComponent = ProjectsStack('Design');
-
-class NavigatorDesign extends React.Component {
-  render () {
-    return (
-      <NavigatorDesignComponent
-        ref={navigatorRef => {
-          NavigationService.setTopLevelNavigator(navigatorRef, 2);
-        }}
-      />
-    );
-  }
-}
-
-class NavigatorBlog extends React.Component {
-  render () {
-    return (
-      <BlogStack
-        ref={navigatorRef => {
-          NavigationService.setTopLevelNavigator(navigatorRef, 3);
-        }}
-      />
-    );
-  }
+	return Navigator
 }
 
 export default TabNavigator({
   Development: {
-    screen: NavigatorDevelopment
+    screen: StackComponent('Development', 1)
   },
   Design: {
-    screen: NavigatorDesign
+    screen: StackComponent('Design', 2)
   },
   Blog: {
-    screen: NavigatorBlog
+    screen: StackComponent('Blog', 3)
   }
 }, {
   navigationOptions: ({navigation}) => ({
+		tabBarOnPress: ({previousScene, scene, jumpToIndex}) => {
+			const { route, index } = scene;
+			const id = scene.index + 1
+
+			if (route.key == previousScene.key) {
+				// TEMP: More elegant solution needed
+				let nav = NavigationService.getRef(id)._navigation;
+				nav.state.routes[0].params.scrollTop();
+			} else {
+				store.dispatch(setActiveTabAction({ id, name: scene.route.routeName }))
+			}
+
+			return jumpToIndex(scene.index)
+		},
 		tabBarIcon: ({ focused, tintColor }) => {
 			const { routeName } = navigation.state;
 			let iconName;
@@ -79,7 +74,9 @@ export default TabNavigator({
 			return (
 				<View>
 					<Ionicons name={iconName} size={25} style={{textAlign: 'center'}}/>
-					<Text style={{letterSpacing: 1, fontSize: 10, fontWeight: focused ? '900' : '600'}}>{routeName.toUpperCase()}</Text>
+					<Text style={{letterSpacing: 1, fontSize: 10, fontWeight: focused ? '900' : '600'}}>
+						{routeName.toUpperCase()}
+					</Text>
 				</View>
 			);
 		}
@@ -96,5 +93,6 @@ export default TabNavigator({
   tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',
   animationEnabled: false,
-  swipeEnabled: false
+  swipeEnabled: false,
+	lazy: true
 });

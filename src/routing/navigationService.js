@@ -6,8 +6,12 @@ function setTopLevelNavigator(navigatorRef, tabId = 1) {
   _navigators[tabId] = navigatorRef;
 }
 
+function getRef (tabId) {
+	return _navigators[tabId]
+}
+
 function navigate(routeName, tabId = 1, params = {}) {
-  let response = _navigators[tabId].dispatch(
+  _navigators[tabId].dispatch(
     NavigationActions.navigate({
       type: NavigationActions.NAVIGATE,
       routeName,
@@ -21,4 +25,5 @@ function navigate(routeName, tabId = 1, params = {}) {
 export default {
   navigate,
   setTopLevelNavigator,
+	getRef
 };
