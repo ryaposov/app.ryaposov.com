@@ -89,8 +89,8 @@ class Project extends React.Component {
 	init = async () => {
 		this.setState({ loading: false });
 		let response = await projects.getOne('projects', this.id());
-		if (response.bodyJson && '_id' in response.bodyJson) {
-			this.setState({ project: response.bodyJson, loading: false });
+		if (response.body && '_id' in response.body) {
+			this.setState({ project: response.body, loading: false });
 		}
 	}
 

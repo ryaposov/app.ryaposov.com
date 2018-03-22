@@ -49,8 +49,8 @@ class Post extends React.Component { // eslint-disable-line react-prefer-statele
 
 	init = async () => {
 		let response = await post.getOne('posts', this.id());
-		if (response.bodyJson && '_id' in response.bodyJson) {
-			this.setState({ post: response.bodyJson });
+		if (response.body && '_id' in response.body) {
+			this.setState({ post: response.body });
 		}
 	}
 

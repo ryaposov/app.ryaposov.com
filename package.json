@@ -27,6 +27,7 @@
     "react-native-timeago": "^0.4.0",
     "react-navigation": "^1.5.8",
     "react-redux": "^5.0.7",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "auth0-js": "^9.3.0"
   }
 }

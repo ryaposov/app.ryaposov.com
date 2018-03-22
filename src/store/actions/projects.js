@@ -23,11 +23,11 @@ export function fetchProjects(category = false) {
 	store.dispatch(requestProjects(store.getState()));
 	projects.getAll('projects').then(response => {
 		if (validateProjectsResponse(response)) {
-			return store.dispatch(receiveProjects(response.bodyJson));
+			return store.dispatch(receiveProjects(response.body));
 		}
 	});
 }
 
-function validateProjectsResponse (response) {
-	return response.status === 200 && response.bodyJson;
+function validateProjectsResponse (res) {
+	return res.response.status === 200 && res.body;
 }

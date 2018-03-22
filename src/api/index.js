@@ -1,23 +1,29 @@
 export const config = () => ({
 	options: {
 		mode: 'cors',
-		headers: {
-			'Content-Type': 'application/json'
-		}
+		headers: { 'Content-Type': 'application/json' }
 	},
 	base: process.env.NODE_ENV === 'production'
 		? 'https://api.ryaposov.com' : 'https://api.ryaposov.com'
 });
 
-
 // Basic wrapper around fetch()
 export default (url, options = {}) => {
+	let fullResponse;
 	let configuration = {};
+
 	configuration = Object.assign({}, config().options, options);
 
 	return fetch(config().base + url, configuration)
-		.then(async (response, i) => {
-			let body = await response.json();
-			return Object.assign(response, { bodyJson: body });
-		});
+		.then(response => {
+			fullResponse = response;
+			return response.json()
+		})
+		.then(response => ({
+			response: fullResponse,
+			body: response
+		}))
+		.catch(err => {
+			throw err;
+		})
 };

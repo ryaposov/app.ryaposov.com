@@ -23,11 +23,11 @@ export function fetchPosts(category = false) {
 	store.dispatch(requestPosts(store.getState()));
 	posts.getAll('posts').then(response => {
 		if (validatePostsResponse(response)) {
-			return store.dispatch(receivePosts(response.bodyJson));
+			return store.dispatch(receivePosts(response.body));
 		}
 	});
 }
 
-function validatePostsResponse (response) {
-	return response.status === 200 && response.bodyJson;
+function validatePostsResponse (res) {
+	return res.response.status === 200 && res.body;
 }

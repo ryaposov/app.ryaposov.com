@@ -11,15 +11,13 @@ class Projects extends React.Component {
 		super(props);
 	}
 
-	state = {
-
-	};
-
 	type = this.props.navigation.getParam('type');
 
-	projects = () => this.props.projects.items.filter(project => (
-		project.category.indexOf(this.type) > -1
-	))
+	projects = () => {
+		return this.props.projects.items.filter(project => (
+			project.category.indexOf(this.type) > -1
+		))
+	}
 
 	componentWillMount() {
 	  this.props.navigation.setParams({

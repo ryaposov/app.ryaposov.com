@@ -6,50 +6,33 @@ import store from '../store';
 import { setActiveTabAction } from '../store/actions/activeTab'
 
 import NavigationService from './navigationService';
+import StackComponent from './stackComponent';
 import {TabNavigator, TabBarBottom} from 'react-navigation';
 import tabBarStyle from '../styles/tabBarStyle';
-import ProjectsStack from './projects';
-import BlogStack from './blog';
-
-function StackComponent (type, id) {
-	let NavigatorComponent = id !== 3 ? ProjectsStack(type) : BlogStack
-
-	class Navigator extends React.Component {
-	  render () {
-	    return (
-	      <NavigatorComponent
-	        ref={navigatorRef => {
-	          NavigationService.setTopLevelNavigator(navigatorRef, id);
-	        }}
-	      />
-	    );
-	  }
-	}
-
-	return Navigator
-}
 
 export default TabNavigator({
-  Development: {
-    screen: StackComponent('Development', 1)
-  },
-  Design: {
-    screen: StackComponent('Design', 2)
-  },
-  Blog: {
-    screen: StackComponent('Blog', 3)
-  }
+  Development: { screen: StackComponent('Development', 1) },
+  Design: { screen: StackComponent('Design', 2) },
+  Blog: { screen: StackComponent('Blog', 3) }
 }, {
   navigationOptions: ({navigation}) => ({
 		tabBarOnPress: ({previousScene, scene, jumpToIndex}) => {
 			const { route, index } = scene;
-			const id = scene.index + 1
+			const id = scene.index + 1 // tab id
 
 			if (route.key == previousScene.key) {
 				// TEMP: More elegant solution needed
 				let nav = NavigationService.getRef(id)._navigation;
-				nav.state.routes[0].params.scrollTop();
+
+				if (nav.state.routes.length > 1) {
+					// Popping back
+					nav.pop(1);
+				} else {
+					// Scrolling top
+					nav.state.routes[0].params.scrollTop();
+				}
 			} else {
+				// Setting activeTab to redux state
 				store.dispatch(setActiveTabAction({ id, name: scene.route.routeName }))
 			}
 
