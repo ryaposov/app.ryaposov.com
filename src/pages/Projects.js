@@ -7,10 +7,6 @@ import ProjectsGrid from '../components/projects';
 import style from '../styles';
 
 class Projects extends React.Component {
-	constructor (props) {
-		super(props);
-	}
-
 	type = this.props.navigation.getParam('type');
 
 	projects = () => {
