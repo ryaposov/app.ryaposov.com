@@ -11,7 +11,7 @@ export default ProjectsStack = (type) => (
 			path: `/:type`,
 			navigationOptions: ({ navigation }) => ({
 				title: type.toUpperCase(),
-				headerBackTitle: null,
+				headerBackTitle: null
 			})
 		},
 	  [type + 'Project']: {
@@ -19,7 +19,7 @@ export default ProjectsStack = (type) => (
 			path: `/:type/:id/`,
 			navigationOptions: ({ navigation }) => ({
 				title: 'Project'.toUpperCase(),
-				headerBackTitle: null,
+				headerBackTitle: null
 			}),
 		}
 	},

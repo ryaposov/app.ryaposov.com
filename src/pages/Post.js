@@ -3,8 +3,9 @@
 // import style from './style.scss';
 import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import SyntaxHighlighter from 'react-native-syntax-highlighter';
+// import { okaidia } from 'react-syntax-highlighter/styles/hljs';
 import NavigationService from '../routing/navigationService';
-// import Markdown from 'react-native-markdown-renderer';
 import Markdown from 'react-native-easy-markdown';
 import TimeAgo from 'react-native-timeago';
 import TextLoader from '../components/textLoader';
@@ -22,7 +23,8 @@ const markDown = {
 	},
 	image: {
 		width: '100%',
-		height: 250
+		height: 250,
+		backgroundColor: '#eaeaea'
 	}
 };
 
@@ -51,32 +53,66 @@ class Post extends React.Component { // eslint-disable-line react-prefer-statele
 		let response = await post.getOne('posts', this.id());
 		if (response.body && '_id' in response.body) {
 			this.setState({ post: response.body });
+
+			this.markdown();
 		}
 	}
 
 	id  = () => this.props.navigation.state.params.id
 
-	componentDidMount () {
-		this.init();
-		// Prism.highlightAll();
+	markdown = () => {
+		let markdown = this.state.post.text;
+		let markdownComponent = <Markdown
+			key={0}
+			renderImage={renderImage}
+			markdownStyles={markDown}>
+				{markdown.trim()}
+			</Markdown>;
+
+		if (typeof markdown != 'string') {
+			return [markdownComponent]
+		}
+
+		let findCode = markdown.match(/<\s*pre[^>]*>([^]+?)<\s*\/\s*pre>/ig);
+		if (!findCode) {
+			return [markdownComponent];
+		}
+
+		let markdownArray = [];
+		markdown = markdown.replace(/<\s*pre[^>]*>([^]+?)<\s*\/\s*pre>/g, '{code}')
+
+		markdown.split('{code}').forEach((s, i) => {
+			markdownArray.push(
+				<Markdown key={i} renderImage={renderImage} markdownStyles={markDown}>{s.trim()}</Markdown>
+			);
+			if (findCode[i]) {
+				markdownArray.push(
+					<SyntaxHighlighter key={i+'-1'} language='javascript' highlighter={"prism" || "hljs"}>{findCode[i].trim()}</SyntaxHighlighter>
+				);
+			}
+		})
+
+		return markdownArray;
 	}
 
-	componentDidUpdate () {
-		// Prism.highlightAll();
+	componentDidMount () {
+		this.init();
 	}
 
 	render () {
 		return (
 			<ScrollView style={style.ScrollView}>
 				<View style={Styles.post}>
-					<Text style={Styles.title}>{this.state.post.title}</Text>
+					<View style={{ marginBottom: 20 }}>
+						<Text style={Styles.title}>{this.state.post.title}</Text>
+						{ this.state.post._id ? (
+							<TimeAgo style={Styles.date} time={this.state.post.date} />
+						) : (
+							this.state.post.date
+						) }
+					</View>
 					{ this.state.post._id ? (
-						<TimeAgo style={Styles.date} time={this.state.post.date} />
-					) : (
-						this.state.post.date
-					) }
-					{ this.state.post._id ? (
-						<Markdown style={{marginTop: 30}} renderImage={renderImage} markdownStyles={markDown}>{this.state.post.text}</Markdown>
+						this.markdown().map(text => text)
 					) : (
 						<Text style={Styles.text}>{this.state.post.text}</Text>
 					) }

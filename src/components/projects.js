@@ -16,12 +16,12 @@ class Projects extends React.Component { // eslint-disable-line react-prefer-sta
 					(this.props.status && !this.props.projects.length) ||
 					(!this.props.status && this.props.projects.length) ||
 					(this.props.projects.length) ? (
-							this.projects().map((project, i) => (
-								<Project size={this.sizes[i % this.sizes.length]} project={project} key={i} />
-							))
-						) : (
-							<Text>No Projects Found</Text>
-						)
+						this.projects().map((project, i) => (
+							<Project size={this.sizes[i % this.sizes.length]} project={project} key={i} />
+						))
+					) : (
+						<Text>No Projects Found</Text>
+					)
 				}
 			</View>
 		);

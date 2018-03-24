@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, ScrollView, Image, StyleSheet } from 'react-native';
-import Markdown from 'react-native-markdown-renderer';
+import Markdown from 'react-native-easy-markdown';
 import { config } from '../api';
 import * as projects from '../api/crud';
 import TextLoader from '../components/textLoader';
@@ -110,7 +110,7 @@ class Project extends React.Component {
 					<Text style={Styles.title}>{this.project().title}</Text>
 					{
 						this.project().hasOwnProperty('_id') ? (
-							<Markdown style={markDown}>{this.project().text}</Markdown>
+							<Markdown markdownStyles={markDown}>{this.project().text}</Markdown>
 						) : (
 							<Text>{this.project().text}</Text>
 						)

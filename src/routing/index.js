@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+// import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import store from '../store';
 import { setActiveTabAction } from '../store/actions/activeTab'
@@ -56,7 +57,7 @@ export default TabNavigator({
 
 			return (
 				<View>
-					<Ionicons name={iconName} size={25} style={{textAlign: 'center'}}/>
+					<Icon name={iconName} size={25} style={{textAlign: 'center'}}/>
 					<Text style={{letterSpacing: 1, fontSize: 10, fontWeight: focused ? '900' : '600'}}>
 						{routeName.toUpperCase()}
 					</Text>

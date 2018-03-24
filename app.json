@@ -1,18 +1,4 @@
 {
-  "expo": {
-    "sdkVersion": "25.0.0",
-    "slug": "ryaposov",
-    "version": "1.0",
-    "platforms": [
-      "ios"
-    ],
-    "orientation": "portrait",
-    "primaryColor": "#000000",
-    "icon": "./res/iOS.png",
-    "splash": {
-      "backgroundColor": "#000000"
-    }
-  },
-  "name": "Ryaposov.com",
-  "displayName": "Pavel Ryaposov"
+  "name": "RyaposovApp",
+  "displayName": "RyaposovApp"
 }

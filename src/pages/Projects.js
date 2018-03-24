@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, Image } from 'react-native';
 import { fetchProjects } from '../store/actions/projects';
 import ProjectsGrid from '../components/projects';
 

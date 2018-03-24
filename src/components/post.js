@@ -1,16 +1,13 @@
-// import Markdown from 'preact-markdown';
-// import TimeAgo from 'react-timeago';
-// import style from './style.scss';
 import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import NavigationService from '../routing/navigationService';
-import Markdown from 'react-native-markdown-renderer';
+import Markdown from 'react-native-easy-markdown';
 import TimeAgo from 'react-native-timeago';
 import Styles from '../styles/PostItem'
 
-const markDown = StyleSheet.create({
+const markDown = {
   text: Styles.text
-});
+};
 
 
 class Post extends React.Component { // eslint-disable-line react-prefer-stateless-function
@@ -23,16 +20,18 @@ class Post extends React.Component { // eslint-disable-line react-prefer-statele
 	render () {
 		return (
 			<View style={Styles.post}>
-				<TouchableOpacity onPress={this.route}>
-					<Text style={Styles.title}>{this.props.post.title}</Text>
-				</TouchableOpacity>
+				<View style={{ marginBottom: 20 }}>
+					<TouchableOpacity onPress={this.route}>
+						<Text style={Styles.title}>{this.props.post.title}</Text>
+					</TouchableOpacity>
+					{ this.props.post._id ? (
+						<TimeAgo style={Styles.date} time={this.props.post.date} />
+					) : (
+						this.props.post.date
+					) }
+				</View>
 				{ this.props.post._id ? (
-					<TimeAgo style={Styles.date} time={this.props.post.date} />
-				) : (
-					this.props.post.date
-				) }
-				{ this.props.post._id ? (
-					<Markdown style={markDown}>{this.props.post.introtext.substring(0, 200)}</Markdown>
+					<Markdown markdownStyles={markDown}>{this.props.post.introtext.substring(0, 200)}</Markdown>
 				) : (
 					<Text style={Styles.text}>{this.props.post.introtext}</Text>
 				) }
