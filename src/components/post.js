@@ -9,9 +9,7 @@ const markDown = {
   text: Styles.text
 };
 
-
 class Post extends React.Component { // eslint-disable-line react-prefer-stateless-function
-
 	route = () => NavigationService.navigate('Post', 3, {
 		path: `Blog/${this.props.post._id}`,
 		id: this.props.post._id
@@ -24,18 +22,18 @@ class Post extends React.Component { // eslint-disable-line react-prefer-statele
 					<TouchableOpacity onPress={this.route}>
 						<Text style={Styles.title}>{this.props.post.title}</Text>
 					</TouchableOpacity>
-					{ this.props.post._id ? (
+					{this.props.post._id ? (
 						<TimeAgo style={Styles.date} time={this.props.post.date} />
 					) : (
 						this.props.post.date
-					) }
+					)}
 				</View>
-				{ this.props.post._id ? (
+				{this.props.post._id ? (
 					<Markdown markdownStyles={markDown}>{this.props.post.introtext.substring(0, 200)}</Markdown>
 				) : (
 					<Text style={Styles.text}>{this.props.post.introtext}</Text>
-				) }
-				{ this.props.post._id &&
+				)}
+				{this.props.post._id &&
 					<TouchableOpacity onPress={this.route} style={Styles.button}>
 						<Text style={Styles.buttonText}>Read More</Text>
 					</TouchableOpacity>

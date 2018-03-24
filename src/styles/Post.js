@@ -1,4 +1,6 @@
-export default {
+import { Stylesheet } from 'react-native';
+
+export default Stylesheet.create({
 	post: {
 		paddingHorizontal: 10,
 		paddingVertical: 20
@@ -16,4 +18,4 @@ export default {
 		fontSize: 20,
 		lineHeight: 30
 	}
-}
+})

@@ -5,9 +5,7 @@ import Project from './project';
 class Projects extends React.Component { // eslint-disable-line react-prefer-stateless-function
 	sizes = ['2-5', '2-5', '1-5', '3-5', '2-5', '5-5', '1-5', '2-5', '2-5', '2-5', '3-5', '5-5'];
 
-	projects = () => (
-		this.props.projects.length ? this.props.projects : this.sizes
-	)
+	projects = () => ( this.props.projects.length ? this.props.projects : this.sizes)
 
 	render () {
 		return (

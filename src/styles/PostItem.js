@@ -1,4 +1,6 @@
-export default {
+import { Stylesheet } from 'react-native';
+
+export default Stylesheet.create({
 	post: {
 		marginTop: 20,
 		marginBottom: 15
@@ -28,4 +30,4 @@ export default {
 		fontSize: 20,
 		lineHeight: 30
 	}
-}
+})

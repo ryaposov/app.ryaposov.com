@@ -20,16 +20,14 @@ let postsLoading = [postLoading].concat([postLoading]);
 class Blog extends React.Component { // eslint-disable-line react-prefer-stateless-function
 	posts = () => (this.props.posts.items.length ? this.props.posts.items : postsLoading)
 
-	_scrollTop = () => this.ScrollView.scrollTo({ x: 0, y: 0, animated: true });
+	scrollTop = () => this.ScrollView.scrollTo({ x: 0, y: 0, animated: true });
 
 	componentDidMount () {
 		fetchPosts();
 	}
 
 	componentWillMount() {
-	  this.props.navigation.setParams({
-	    scrollTop: this._scrollTop,
-	  });
+	  this.props.navigation.setParams({ scrollTop: this.scrollTop });
 	}
 
 	render () {

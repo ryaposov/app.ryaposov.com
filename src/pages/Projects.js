@@ -15,16 +15,14 @@ class Projects extends React.Component {
 		))
 	}
 
-	componentWillMount() {
-	  this.props.navigation.setParams({
-	    scrollTop: this._scrollTop,
-	  });
-	}
-
-	_scrollTop = () => this.ScrollView.scrollTo({ x: 0, y: 0, animated: true });
+	scrollTop = () => this.ScrollView.scrollTo({ x: 0, y: 0, animated: true });
 
 	componentDidMount () {
 		fetchProjects();
+	}
+
+	componentWillMount() {
+	  this.props.navigation.setParams({ scrollTop: this.scrollTop });
 	}
 
   render() {

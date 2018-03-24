@@ -1,4 +1,6 @@
-export default {
+import { Stylesheet } from 'react-native';
+
+export default Stylesheet.create({
 	title: {
 		fontSize: 30,
 		fontWeight: '900',
@@ -27,4 +29,4 @@ export default {
 		lineHeight: 35,
 		fontWeight: '300'
 	}
-}
+})

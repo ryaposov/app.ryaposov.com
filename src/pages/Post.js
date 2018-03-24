@@ -1,10 +1,6 @@
-// import Markdown from 'preact-markdown';
-// import TimeAgo from 'react-timeago';
-// import style from './style.scss';
 import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
-// import { okaidia } from 'react-syntax-highlighter/styles/hljs';
 import NavigationService from '../routing/navigationService';
 import Markdown from 'react-native-easy-markdown';
 import TimeAgo from 'react-native-timeago';

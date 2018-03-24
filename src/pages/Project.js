@@ -16,14 +16,6 @@ const markDown = StyleSheet.create({
 });
 
 class Project extends React.Component {
-	static navigationOptions = {
-		// headerTransparent: true,
-    // headerStyle: {
-    //   backgroundColor: 'rgba(255,255,255,.8)',
-		// 	borderBottomWidth: 0
-    // }
-  };
-
 	state = {
 		project: {
 			title: <TextLoader text={'___ _____'.repeat(10)} />,
@@ -34,10 +26,6 @@ class Project extends React.Component {
 			stack: [<TextLoader text="__________" />],
 			colors: { main: '#eaeaea' }
 		}
-	}
-
-	onScroll = (e) => {
-		// console.log(e.nativeEvent.contentOffset.y)
 	}
 
 	goBack = () => window.history.back();
@@ -94,27 +82,25 @@ class Project extends React.Component {
 		}
 	}
 
-	async componentDidMount () {
+	componentDidMount () {
 		this.init();
 	}
 
   render() {
     return (
-      <ScrollView onScroll={this.onScroll} scrollEventThrottle={10} style={this.scrollViewStyle}>
+      <ScrollView style={this.scrollViewStyle}>
 				<View style={{...Styles.image, ...this.imageStyle()}}>
-					{ this.project().hasOwnProperty('_id') && (
+					{this.project().hasOwnProperty('_id') && (
 						<Image source={{uri: this.image()}} style={Styles.image} />
-					) }
+					)}
 				</View>
 				<View style={{ paddingHorizontal: 10 }}>
 					<Text style={Styles.title}>{this.project().title}</Text>
-					{
-						this.project().hasOwnProperty('_id') ? (
-							<Markdown markdownStyles={markDown}>{this.project().text}</Markdown>
-						) : (
-							<Text>{this.project().text}</Text>
-						)
-					}
+					{this.project().hasOwnProperty('_id') ? (
+						<Markdown markdownStyles={markDown}>{this.project().text}</Markdown>
+					) : (
+						<Text>{this.project().text}</Text>
+					)}
 					<View style={{ marginTop: 20 }}>
 						{
 							this.params().map(param => (

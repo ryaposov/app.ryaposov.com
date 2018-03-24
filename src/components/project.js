@@ -5,8 +5,6 @@ import NavigationService from '../routing/navigationService';
 import { config } from '../api';
 import TextLoader from './textLoader';
 
-const block = 'project';
-
 let projectLoading = {
 	title: <TextLoader text={'___ _____'.repeat(2)} />,
 	category: [<TextLoader text="_____" />],
